@@ -1,0 +1,92 @@
+<template>
+  <v-app dark>
+    <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title v-text="title" />
+      <v-spacer />
+      <v-btn icon>
+        <v-icon>mdi-lens</v-icon>
+      </v-btn>
+    </v-app-bar>
+    <v-navigation-drawer
+      v-model="drawer"
+      :clipped="clipped"
+      absolute
+      bottom
+      temporary
+      app
+    >
+      <v-list>
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-main style="height: calc(100vh - 100px) !important; overflow-y: scroll">
+      <v-container style="padding-bottom: 60px">
+        <nuxt />
+      </v-container>
+    </v-main>
+
+    <v-footer :absolute="!fixed" app style="text-align: center">
+      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span style="width: 30px"></span>
+      <span><nuxt-link to="/privacy">Privacy Policy</nuxt-link></span>
+    </v-footer>
+  </v-app>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      clipped: true,
+      drawer: false,
+      fixed: false,
+      items: [
+        {
+          icon: 'mdi-apps',
+          title: 'Home',
+          to: '/',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'About',
+          to: '/about',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Reach me',
+          to: '/reach',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'All posts',
+          to: '/posts',
+        },
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: 'Blog App',
+    }
+  },
+}
+</script>
+<style scoped></style>
+<style>
+html {
+  overflow: hidden;
+}
+</style>
